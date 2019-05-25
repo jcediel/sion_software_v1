@@ -1,0 +1,382 @@
+.img_pac_qr{
+  width: 4em;
+}
+.fuente_proced{
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 0.8em;
+}
+.clickable{
+  cursor:pointer;
+}
+.borde_p{
+  border-radius: 1.5em;
+  border-color: #9BEE06;
+  border-style: solid;
+}
+.cuadrosection{
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9);
+  border-radius: .3em;
+}
+.fuentedosis{
+  font-size: 0.6em;
+}
+.texto-vertical-3 {
+  font-size: 1em;
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+}
+.footersion{
+  background-color: rgba(0,76,120, 0.4);
+  color: #fff;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+}
+.texto-vertical-2 {
+  width:10px;
+  word-wrap: break-word;
+  text-align:center;
+}
+.texto-vertical {
+  width:20px;
+  word-wrap: break-word;
+  text-align:center;
+}
+.fondoizq{
+  background-color: rgba(66, 130, 194, 0.5);
+  box-shadow: 2px 2px 5px rgba(37, 83, 122, 0.9);
+  border-radius: .3em;
+  color: white;
+  font-family: 'Josefin Sans', sans-serif;
+  padding: .5em .5em;
+
+  }
+.ltdxmodal .modal{
+    color: red;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 5%;
+    }
+.fondoder{
+    background-color: rgba(217, 163, 26, 0.5);
+    box-shadow: 2px 2px 2px rgba(217, 134, 26, 0.9);
+    border-radius: .3em;
+    color: white;
+    font-family: 'Josefin Sans', sans-serif;
+    padding: .5em .5em;
+
+  }
+.imagecara{
+  width: 70%;
+}
+.img_inicial{
+  border-radius: 0.3em;
+  width: 10em;
+}
+.fuente_noti_guardado{
+  background-color: rgba(248, 154, 13, 0.6);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  font-family: 'Baloo Tamma', cursive;
+}
+.botontool{
+  background: #D23D15;
+	border-radius: 0.5em;
+	color: white;
+	display: inline-block;
+	margin: 0 1em 0 0;
+	padding: 0.5em 1em;
+	text-decoration: none;
+  transition: all 1s ease;
+}
+.botontool:hover{
+  background: white;
+	color: black;
+  text-decoration: none;
+	transform: scale(1.2);
+}
+.margen1{
+  margin: 0 1em 0 0;
+  transition:  1s ease;
+}
+.margen1:hover{
+  transform: scale(1.1,1.1);
+}
+.fuente_alerta_fijo{
+  font-family: 'Raleway', sans-serif;
+  color:#FB1900;
+}
+.botonformula{
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 2px 2px 5px rgba(227, 66, 98, 0.9);
+  border-radius: .3em;
+  color: #000;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: .2em .2em;
+  width: 70%;
+  text-align: center;
+  transition: all 1s ease;
+}
+.botonformula:hover{
+  background-color: rgba(184, 15, 23, 0.9);
+  font-size: 1.1em;
+  transform: scale(1,1.4);
+}
+
+.botonhc{
+  background-color: rgba(105, 156, 207, 0.9);
+  box-shadow: 2px 2px 5px rgba(105, 156, 207, 0.9);
+  border-radius: .3em;
+  color: white;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: .2em .2em;
+  width: 100%;
+  text-align: center;
+  transition: all 1s ease;
+}
+.botonhc:hover{
+  background-color: rgba(184, 15, 23, 0.9);
+  font-size: 1.1em;
+  transform: scale(1,1.4);
+}
+
+.ac{
+  width: 100%;
+  color: white;
+}
+.ac:hover{
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#logintitle{
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 3em;
+}
+#th-estilot{
+  background-color: rgba(159, 189, 91, 0.9);
+  box-shadow: 2px 2px 5px rgba(159, 189, 91, 0.9);
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: bold;
+  padding: .3em .3em;
+  text-align: center;
+}
+#th-estiloE{
+  background-color: rgba(105, 156, 207, 0.9);
+  box-shadow: 2px 2px 5px rgba(159, 189, 91, 0.9);
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: bold;
+  padding: .3em .3em;
+  text-align: center;
+}
+#th-estilo1{
+  background-color: rgba(159, 189, 91, 0.9);
+  box-shadow: 2px 2px 5px rgba(159, 189, 91, 0.9);
+  font-family: 'Josefin Sans', sans-serif;
+  text-align: center;
+}
+#th-estilo2{
+  background-color: rgba(184, 15, 23, 0.9);
+  box-shadow: 2px 2px 5px rgba(184, 15, 23, 0.5);
+  color: white;
+  font-family: 'Josefin Sans', sans-serif;
+  text-align: center;
+}
+#th-estilo3{
+  background-color: rgba(105, 156, 207, 0.9);
+  box-shadow: 2px 2px 5px rgba(105, 156, 207, 0.9);
+  font-family: 'Josefin Sans', sans-serif;
+  text-align: center;
+}
+#th-estilo4{
+  background-color: rgba(237, 237, 237, 0.9);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9);
+  font-family: 'Josefin Sans', sans-serif;
+  text-align: center;
+}
+.popover1{
+  background-color: rgba(105, 156, 207, 0.9);
+  box-shadow: 2px 2px 5px rgba(105, 156, 207, 0.9);
+  border-radius: 0.3em;
+}
+#sectpac{
+  width: 60%;
+}
+#secteps{
+  width: 39%;
+}
+#secteps , #sectpac{
+  display: inline-block;
+  vertical-align: top;
+}
+#bartitulo{
+  width: 80%;
+}
+#barelemento{
+  width: 19%;
+}
+#bartitulo , #barelemento{
+  display: inline-block;
+  vertical-align: top;
+}
+.fuente1{
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 1.3em;
+}
+.fuenteuser{
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 1em;
+  padding: 0 0 0 0;
+  margin: 0 3em 0 0;
+}
+.fuente_titulo{
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 3em;
+}
+.image_inicio_login{
+    width: 10em;
+}
+.image_login{
+  border-radius: 3em;
+  margin: 0 0 0 3em;
+  float: right;
+  padding: 0 0 0 0;
+  width: 3em;
+}
+.image_login_table{
+  border-radius: 3em;
+  margin: 0 0 0 3em;
+  float: right;
+  padding: 0 0 0 0;
+  width: 6em;
+}
+.image_piso{
+  border-radius: 4em;
+  margin: 0 0 0 3em;
+  float: right;
+  padding: 0 0 0 0;
+  width: 4em;
+}
+.avatar{
+  width: 10px;
+}
+.image_logo{
+  border-radius: 2em;
+  display: inline-block;
+  vertical-align: top;
+  width: 2em;
+}
+.image_logo:hover{
+  -webkit-transform: translateY(-6px);
+  -webkit-animation: 0.7s movercaja infinite;
+  width: 2.2em;
+}
+.image_logo_admision{
+  border-color: black;
+  border: 1 solid;
+  border-radius: 3em;
+  display: inline-block;
+  vertical-align: top;
+  width: 8em;
+}
+.image_logo1{
+  border-radius: 1em;
+  width: 8em;
+}
+.image_zoom{
+  border-radius: 0.3em;
+  float: center;
+  width: 5em;
+}
+
+.banermarquee{
+  background-color: rgba(184, 15, 23, 0.9);
+  box-shadow: 2px 2px 5px rgba(184, 15, 23, 0.5);
+  border-radius: 0.5em;
+  color: white;
+  font-family: 'Josefin Sans', sans-serif;
+  text-align: center;
+}
+.banertitle {
+  background-color: rgba(184, 15, 23, 0.9);
+  box-shadow: 2px 2px 5px rgba(184, 15, 23, 0.5);
+  border-radius: 0.2em;
+  color: white;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 1.3em;
+  text-align: center;
+  width: 100%;
+}
+.baner1 {
+  background-color: rgba(159, 189, 91, 0.9);
+  box-shadow: 2px 2px 5px rgba(159, 189, 91, 0.9);
+  border-radius: 0.2em;
+  color: black;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 1.1em;
+  text-align: center;
+  width: 100%;
+}
+
+
+
+/* CODIGO DE LA CAJA */
+.sombra_movil {
+  -webkit-transform: translateZ(0);
+}
+
+.sombra_movil:hover {
+  -webkit-transform: translateY(-6px);
+  -webkit-animation: 1.5s movercaja infinite;
+}
+
+@-webkit-keyframes movercaja {
+  50% {
+    -webkit-transform: translateY(-3px);
+  }
+}
+.fondo_login{
+  background: url('/images/tales.jpg');
+}
+/* CODIGO DEL BEFORE */
+.sombra_movil:before {
+  position: absolute;
+  content: '';
+  top: 100%;
+  left: 5%;
+  height: 10px;
+  width: 90%;
+  opacity: 0;
+  background: -webkit-radial-gradient(center,
+    ellipse,  rgba(0, 0, 0, 0.35) 0%,
+              rgba(0, 0, 0, 0) 80%);
+  -webkit-transition-duration: 0.3s;
+}
+
+.sombra_movil:hover:before {
+  opacity: 0.4;
+  -webkit-transform: translateY(6px);
+  -webkit-animation: 1.5s moversombra infinite;
+}
+
+@-webkit-keyframes moversombra {
+  50% {
+    -webkit-transform: translateY(3px);
+    opacity: 1;
+  }
+}
+.cursor1:hover{
+  border-radius: 0.3em;
+  cursor: zoom-in;
+}
+.unomarquee{
+  background-color: #9fbd59;
+  border-radius:  0 0.3em;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 1.3em;
+}

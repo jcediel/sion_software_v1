@@ -1,0 +1,25 @@
+<html>
+<head>
+<title>Mouse Over</title>
+<script src="js/jquery.js"></script>
+<script>
+	$(document).ready(inicializar);
+		function inicializar(){
+				var x=$("#hola");
+				x.mouseover(entraRaton);
+				x.mouseout(saleRaton);
+			}
+		function entraRaton(){
+				$(this).css("background-color","yellow");
+			}
+		function saleRaton(){
+				$(this).css("background-color","red");
+	}
+</script>
+
+</head>
+
+<body>
+<div id="hola">Yo soy Div</div>
+</body>
+</html>

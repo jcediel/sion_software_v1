@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Boton Play y Stop</title>
+</head>
+<body>
+<h1>Boton Play y Stop</h1>
+
+<audio src="d.mp3">
+
+</audio>
+
+<button id="boton">Play</button>
+
+<script type="text/javascript">
+ var v = document.getElementsByTagName("audio")[0];
+ var sound = false;
+
+ var boton = document.getElementById("boton");
+ boton.addEventListener("click", function(){
+	if (!sound) {
+		v.play();
+		this.innerHTML = "DETENER";
+		sound = true;
+	} else {
+		v.pause();
+		this.innerHTML = "REPRODUCIR";
+		sound = false;
+	}
+ });
+</script>
+</body>
+</html>

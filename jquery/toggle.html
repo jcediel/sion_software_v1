@@ -1,0 +1,27 @@
+<html>
+<head>
+<title>Toggle</title>
+<script src="js/jquery.js"></script>
+<script>
+	$(document).ready(inicializar);
+		function inicializar(){
+				var x=$("#mostrar");
+				x.click(muestrame);
+			}
+		function muestrame(){
+				var z=$("#objetivo");
+				z.toggle("slow");			
+		}
+</script>
+
+</head>
+
+<body>
+<input type="button" id="mostrar" value="Mostrar" />
+<div id="objetivo">
+	<img src="images/logo-mw.jpg" />
+	<h1>textooooooooooooooooooooo</h1>
+	<p>asdfdf dfasfsad dfasfadsadsfs fsdf</p>
+</div>
+</body>
+</html>

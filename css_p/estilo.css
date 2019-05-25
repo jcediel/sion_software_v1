@@ -1,0 +1,60 @@
+/*relacionado con BRAND*/
+.bg-section {
+  background-image: url("../images/fondoSlide/fondo3.png");
+  background-color: #cccccc;
+   height: 500px;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+   position: relative;
+ }
+}
+.img_brand{
+  width: 1.8em;
+}
+.lt_brand{
+  font-family: 'Raleway', sans-serif;
+  color: #fff;
+  font-size: 1.6em;
+}
+.lt_general{
+  font-family: 'Raleway', sans-serif;
+}
+#fondoB{
+  background-color: #222d2d;
+  background-image: url("../images/fondoLogin.jpg");
+  background-size: cover;
+        -moz-background-size: cover fixed;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
+}
+
+/*Relacionado con login*/
+.img_logosP{
+    width: 15em;
+}
+.img_pac{
+  width: 2.8em;
+}
+.img_pac_qr{
+  width: 4em;
+}
+.contenedor{
+    width:500px;
+    position: relative;
+}
+
+#slideIzq{
+    position: absolute;
+    left:0;  /*se oculta por la izquierda*/
+    /*right: 0;  se oculta por la derecha */
+}
+#scroll {
+     overflow:scroll;
+     height:500px;
+     width:1000px;
+}
+#scroll table {
+    width:500px;
+    background-color:#fff;
+}

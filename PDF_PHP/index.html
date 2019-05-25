@@ -1,0 +1,44 @@
+<html ng-app="firts">
+  <head>
+  <link rel="stylesheet" media="screen" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+  <link rel="stylesheet" media="screen" href="css/css.css"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+  <script src="//code.jquery.com/jquery.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="js/funciones.js"></script>
+  </head>
+  <title>Exportacion a PDF</title>
+  <body>
+
+   <form action="exportacion.php" method="POST" id="frm_excel" target="_blank">
+   </form>
+
+    <div ng-controller="listado" class="container">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h1 class="text-center linea">Listado de usuario</h1>
+        <button type="button" ng-click="exportar_excel()" class="btn btn-primary">Exportar a PDF</button>
+      </div>
+      <br/>
+      <div id="listado_usuario">
+      <table class="table table-striped table-bordered" width="100%">
+        <tr>
+          <th class="cabecera">#</th>
+          <th class="cabecera">Nombre</th>
+          <th class="cabecera">Apellido</th>
+          <th class="cabecera">Direccion</th>
+          <th class="cabecera">Telefono</th>
+        </tr>
+        <tbody id="post_listado">
+          <tr ng-repeat="data in posts">
+            <td class="data_campo">{{data.id}}</td>
+            <td class="data_campo">{{data.nombre}}</td>
+            <td class="data_campo">{{data.apellido}}</td>
+            <td class="data_campo">{{data.direccion}}</td>
+            <td class="data_campo">{{data.telefono}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+  </body>
+</html>

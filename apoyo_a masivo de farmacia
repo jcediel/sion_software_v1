@@ -1,0 +1,498 @@
+<table class="table table-bordered">
+  <thead class="thead-inverse ">
+    <tr>
+      <th class="text-center danger">MEDICAMENTO</th>
+      <th class="text-center danger">DETALLE DOSIFICACION</th>
+    </tr>
+  </thead>
+  <?php
+  if (isset($_REQUEST["doc"])){
+  $fa=$_REQUEST['f'];
+  $doc=$_REQUEST["doc"];
+  $fbus=$_REQUEST["fbus"];
+  $sql="SELECT a.id_paciente,tdoc_pac,doc_pac,nom1,nom2,ape1,ape2,
+               b.id_adm_hosp,
+               c.id_m_fmedhosp,fejecucion_inicial,fejecucion_final,tipo_formula,estado_m_fmedhosp,dx_formula,dx1_formula,dx2_formula,
+               d.id_d_fmedhosp,medicamento,via,frecuencia,dosis1,dosis2,dosis3,dosis4,obsfmedhosp,tipo_mipres,rad_mipres,cod_med
+
+      FROM pacientes a INNER JOIN adm_hospitalario b on (a.id_paciente=b.id_paciente)
+                       INNER JOIN m_fmedhosp c on (b.id_adm_hosp=c.id_adm_hosp)
+                       INNER JOIN d_fmedhosp d on (c.id_m_fmedhosp=d.id_m_fmedhosp)
+
+      WHERE b.id_adm_hosp = '".$_REQUEST['idadmhosp']."' and c.estado_m_fmedhosp = 'solicitado'
+                                             and d.estado_med = 'Solicitado'
+                                             and b.estado_adm_hosp = 'Activo'
+                                             and fejecucion_final >='$fa' ";
+      //echo $sql;
+    if ($tabla=$bd1->sub_tuplas($sql)){
+      foreach ($tabla as $fila ) {
+
+        if ($fila["id_d_fmedhosp"]!='') {
+            $fa=date('Y-m-d');
+            $f=$_REQUEST['f'];
+            echo"<tr >\n";
+              if ($fila['dosis1']>0) {
+                $id=$fila["id_d_fmedhosp"];
+                $sql2="SELECT id_dosi_med FROM dosificacion_med WHERE id_d_fmedhosp=$id and freg_farmacia='$f' and nom_dosi='6am-8am'";
+                //echo $sql2;
+                if ($tabla2=$bd1->sub_tuplas($sql2)){
+                  foreach ($tabla2 as $fila2 ) {
+                    if (isset($fila2['id_dosi_med'])) {
+
+                    }
+                  }
+                }else {
+                  echo'<th class="text-center">'.$fila["medicamento"].' <br> '.$fila["via"].' <br> '.$fila["frecuencia"].' Horas</th>';
+                    echo'<td class="text-left">';
+                          ?>
+                          <section class="col-md-12">
+                            <section class="col-md-6">
+                              <article class="col-md-3">
+                                <label>ID:</label>
+                                <input type="text" class="form-control" required name="id_d_fmedhosp[]" value="<?php echo $fila['id_d_fmedhosp'] ?>" <?php echo $atributo1 ?>>
+                              </article>
+                              <article class="col-md-4">
+                                <label>Franja:</label>
+                                <input type="text" class="form-control" required name="nom_dosi[]" value="6am-8am" <?php echo $atributo1 ?>>
+                              </article>
+                              <article class="col-md-5">
+                                <label>Estado:</label>
+                                <input type="text" class="form-control" required name="estado_dosi[]" value="Dosificado" <?php echo $atributo1 ?>>
+                              </article>
+                            </section>
+                            <section class="col-md-6">
+                              <article class="col-md-6">
+                                <label>Fecha:</label>
+                                <input type="text" class="form-control" required name="freg_farmacia[]" value="<?php echo $f ?>" <?php echo $atributo1 ?>>
+                              </article>
+                              <article class="col-md-3">
+                                <label>Dispensó:</label>
+                                <input type="text" class="form-control" required name="id_user[]" value="<?php echo $_SESSION['AUT']['id_user'] ?>" <?php echo $atributo1 ?>>
+                              </article>
+                              <article class="col-md-3">
+                                <label>Cantidad:</label>
+                                <input type="text" class="form-control" required name="cant_dosi[]" value="<?php echo $fila['dosis1'] ?>" >
+                              </article>
+                            </section>
+                            <section class="col-md-12">
+                              <label for="">Seleccione detalle:</label>
+                              <?php
+                              $id=$fila['id_d_fmedhosp'];
+                              $sql_cod="SELECT cod_med FROM d_fmedhosp WHERE id_d_fmedhosp=$id";
+                              if ($tabla_cod=$bd1->sub_tuplas($sql_cod)){
+                               foreach ($tabla_cod as $fila_cod ) {
+                                 ?>
+                                 <select class="form-control" required name="detalle_despacho[]">
+                                   <option value=""></option>
+                                   <?php
+                                   $id_producto=$fila_cod['cod_med'];
+                                   $bodega=$_REQUEST['bod'];
+
+                                   $sql="SELECT id_dproducto,nom_completa,laboratorio,cantidad,fvencimiento,lote from d_producto where id_producto = $id_producto and id_bodega=$bodega ORDER BY cantidad ASC";
+
+                                  if($tabla=$bd1->sub_tuplas($sql)){
+                                    foreach ($tabla as $fila2) {
+
+                                       $vencimiento=$fila2['fvencimiento'];
+                                       $segundos= strtotime($vencimiento) - strtotime('now');
+                                       $diferencia_dias=intval($segundos /60/60/24);
+                                       $dias=ceil($diferencia_dias);
+
+                                       if ($dias>0 && $dias<=183) {
+                                         if ($fila["id_dproducto"]==$fila2["id_dproducto"]){
+                                          $sw=' selected="selected"';
+                                        }else{
+                                          $sw="";
+                                        }
+                                      echo '<option class="text-danger" value="'.$fila2["id_dproducto"].'"'.$sw.'><strong>'.$fila2["nom_completa"].' - '.$fila2["laboratorio"].' vencimiento: '.$fila2["fvencimiento"].'  Lote:'.$fila2["lote"].' - ('.$fila2["cantidad"].')</strong></option>';
+                                       }
+
+                                       if ($dias>183 && $dias<=365) {
+                                         if ($fila["id_dproducto"]==$fila2["id_dproducto"]){
+                                          $sw=' selected="selected"';
+                                        }else{
+                                          $sw="";
+                                        }
+                                      echo '<option class="text-warning" value="'.$fila2["id_dproducto"].'"'.$sw.'><strong>'.$fila2["nom_completa"].' - '.$fila2["laboratorio"].' vencimiento: '.$fila2["fvencimiento"].'  Lote:'.$fila2["lote"].' - ('.$fila2["cantidad"].')</strong></option>';
+                                       }
+
+                                       if ($dias>365) {
+                                         if ($fila["id_dproducto"]==$fila2["id_dproducto"]){
+                                          $sw=' selected="selected"';
+                                        }else{
+                                          $sw="";
+                                        }
+                                      echo '<option class="text-success" value="'.$fila2["id_dproducto"].'"'.$sw.'><strong>'.$fila2["nom_completa"].' - '.$fila2["laboratorio"].' vencimiento: '.$fila2["fvencimiento"].'  Lote:'.$fila2["lote"].' - ('.$fila2["cantidad"].')</strong></option>';
+                                       }
+
+                                    }
+                                  }
+
+                                   ?>
+                                 </select>
+                                 <?php
+                               }
+                              }else {
+                                echo "No hay detalle de medicamentos disponible";
+                              }
+                               ?>
+                            </section>
+                          </section>
+                          <?php
+                    echo'</td>';
+                }
+              }
+              echo"</tr >\n";
+              echo"<tr >\n";
+
+
+              if ($fila['dosis2']>0) {
+                $id=$fila["id_d_fmedhosp"];
+                $sql2="SELECT id_dosi_med FROM dosificacion_med WHERE id_d_fmedhosp=$id and freg_farmacia='$f' and nom_dosi='12m-2pm'";
+                //echo $sql2;
+                if ($tabla2=$bd1->sub_tuplas($sql2)){
+                  foreach ($tabla2 as $fila2 ) {
+                    if (isset($fila2['id_dosi_med'])) {
+
+                    }
+                  }
+                }else {
+                  echo'<th class="text-center">'.$fila["medicamento"].' <br> '.$fila["via"].' <br> '.$fila["frecuencia"].' Horas </th>';
+                  echo'<td class="text-left">';
+                        ?>
+                        <section class="col-md-12">
+                          <section class="col-md-6">
+                            <article class="col-md-3">
+                              <label>ID:</label>
+                              <input type="text" class="form-control" required name="id_d_fmedhosp[]" value="<?php echo $fila['id_d_fmedhosp'] ?>" <?php echo $atributo1 ?>>
+                            </article>
+                            <article class="col-md-4">
+                              <label>Franja:</label>
+                              <input type="text" class="form-control" required name="nom_dosi[]" value="12m-2pm" <?php echo $atributo1 ?>>
+                            </article>
+                            <article class="col-md-5">
+                              <label>Estado :</label>
+                              <input type="text" class="form-control" required name="estado_dosi[]" value="Dosificado" <?php echo $atributo1 ?>>
+                            </article>
+                          </section>
+                          <section class="col-md-6">
+                            <article class="col-md-6">
+                              <label>Fecha:</label>
+                              <input type="text" class="form-control" required name="freg_farmacia[]" value="<?php echo $f ?>" <?php echo $atributo1 ?>>
+                            </article>
+                            <article class="col-md-3">
+                              <label>Dispensó:</label>
+                              <input type="text" class="form-control" required name="id_user[]" value="<?php echo $_SESSION['AUT']['id_user'] ?>" <?php echo $atributo1 ?>>
+                            </article>
+                            <article class="col-md-3">
+                              <label>Cantidad:</label>
+                              <input type="text" class="form-control" required name="cant_dosi[]" value="<?php echo $fila['dosis2'] ?>" >
+                            </article>
+                          </section>
+                          <section class="col-md-12">
+                            <label for="">Seleccione detalle:</label>
+
+                            <?php
+                            $id=$fila['id_d_fmedhosp'];
+                            $sql_cod="SELECT cod_med FROM d_fmedhosp WHERE id_d_fmedhosp=$id";
+                            if ($tabla_cod=$bd1->sub_tuplas($sql_cod)){
+                             foreach ($tabla_cod as $fila_cod ) {
+                               ?>
+                               <select class="form-control" required name="detalle_despacho[]">
+                                 <option value=""></option>
+                                 <?php
+                                 $id_producto=$fila_cod['cod_med'];
+                                 $bodega=$_REQUEST['bod'];
+
+                                 $sql="SELECT id_dproducto,nom_completa,laboratorio,cantidad,fvencimiento,lote from d_producto where id_producto = $id_producto and id_bodega=$bodega ORDER BY cantidad ASC";
+
+                                if($tabla=$bd1->sub_tuplas($sql)){
+                                  foreach ($tabla as $fila2) {
+
+                                     $vencimiento=$fila2['fvencimiento'];
+                                     $segundos= strtotime($vencimiento) - strtotime('now');
+                                     $diferencia_dias=intval($segundos /60/60/24);
+                                     $dias=ceil($diferencia_dias);
+
+                                     if ($dias>0 && $dias<=183) {
+                                       if ($fila["id_dproducto"]==$fila2["id_dproducto"]){
+                                        $sw=' selected="selected"';
+                                      }else{
+                                        $sw="";
+                                      }
+                                    echo '<option class="text-danger" value="'.$fila2["id_dproducto"].'"'.$sw.'><strong>'.$fila2["nom_completa"].' - '.$fila2["laboratorio"].' vencimiento: '.$fila2["fvencimiento"].'  Lote:'.$fila2["lote"].' - ('.$fila2["cantidad"].')</strong></option>';
+                                     }
+
+                                     if ($dias>183 && $dias<=365) {
+                                       if ($fila["id_dproducto"]==$fila2["id_dproducto"]){
+                                        $sw=' selected="selected"';
+                                      }else{
+                                        $sw="";
+                                      }
+                                    echo '<option class="text-warning" value="'.$fila2["id_dproducto"].'"'.$sw.'><strong>'.$fila2["nom_completa"].' - '.$fila2["laboratorio"].' vencimiento: '.$fila2["fvencimiento"].'  Lote:'.$fila2["lote"].' - ('.$fila2["cantidad"].')</strong></option>';
+                                     }
+
+                                     if ($dias>365) {
+                                       if ($fila["id_dproducto"]==$fila2["id_dproducto"]){
+                                        $sw=' selected="selected"';
+                                      }else{
+                                        $sw="";
+                                      }
+                                    echo '<option class="text-success" value="'.$fila2["id_dproducto"].'"'.$sw.'><strong>'.$fila2["nom_completa"].' - '.$fila2["laboratorio"].' vencimiento: '.$fila2["fvencimiento"].'  Lote:'.$fila2["lote"].' - ('.$fila2["cantidad"].')</strong></option>';
+                                     }
+
+                                  }
+                                }
+
+                                 ?>
+                               </select>
+                               <?php
+                             }
+                            }else {
+                              echo "No hay detalle de medicamentos disponible";
+                            }
+                             ?>
+                          </section>
+                        </section>
+                        <?php
+                  echo'</td>';
+                }
+
+              }
+              echo"</tr >\n";
+              echo"<tr >\n";
+              if ($fila['dosis3']>0) {
+                $id=$fila["id_d_fmedhosp"];
+                $sql2="SELECT id_dosi_med FROM dosificacion_med WHERE id_d_fmedhosp=$id and freg_farmacia='$f' and nom_dosi='6pm-8pm'";
+                //echo $sql2;
+                if ($tabla2=$bd1->sub_tuplas($sql2)){
+                  foreach ($tabla2 as $fila2 ) {
+                    if (isset($fila2['id_dosi_med'])) {
+
+                    }
+                  }
+                }else {
+                  echo'<th class="text-center">'.$fila["medicamento"].' <br> '.$fila["via"].' <br> '.$fila["frecuencia"].' Horas </th>';
+                  echo'<td class="text-left">';
+                        ?>
+                        <section class="col-md-12">
+                          <section class="col-md-6">
+                            <article class="col-md-3">
+                              <label>ID:</label>
+                              <input type="text" class="form-control" required name="id_d_fmedhosp[]" value="<?php echo $fila['id_d_fmedhosp'] ?>" <?php echo $atributo1 ?>>
+                            </article>
+                            <article class="col-md-4">
+                              <label>Franja:</label>
+                              <input type="text" class="form-control" required name="nom_dosi[]" value="6pm-8pm" <?php echo $atributo1 ?>>
+                            </article>
+                            <article class="col-md-5">
+                              <label>Estado :</label>
+                              <input type="text" class="form-control" required name="estado_dosi[]" value="Dosificado" <?php echo $atributo1 ?>>
+                            </article>
+                          </section>
+                          <section class="col-md-6">
+                            <article class="col-md-6">
+                              <label>Fecha:</label>
+                              <input type="text" class="form-control" required name="freg_farmacia[]" value="<?php echo $f ?>" <?php echo $atributo1 ?>>
+                            </article>
+                            <article class="col-md-3">
+                              <label>Dispensó:</label>
+                              <input type="text" class="form-control" required name="id_user[]" value="<?php echo $_SESSION['AUT']['id_user'] ?>" <?php echo $atributo1 ?>>
+                            </article>
+                            <article class="col-md-3">
+                              <label>Cantidad:</label>
+                              <input type="text" class="form-control" required name="cant_dosi[]" value="<?php echo $fila['dosis3'] ?>" >
+                            </article>
+                          </section>
+                          <section class="col-md-12">
+                            <label for="">Seleccione detalle:</label>
+                            <option value=""></option>
+                            <?php
+                            $id=$fila['id_d_fmedhosp'];
+                            $sql_cod="SELECT cod_med FROM d_fmedhosp WHERE id_d_fmedhosp=$id";
+                            if ($tabla_cod=$bd1->sub_tuplas($sql_cod)){
+                             foreach ($tabla_cod as $fila_cod ) {
+                               ?>
+                               <select class="form-control" required name="detalle_despacho[]">
+                                 <option value=""></option>
+                                 <?php
+                                 $id_producto=$fila_cod['cod_med'];
+                                 $bodega=$_REQUEST['bod'];
+
+                                 $sql="SELECT id_dproducto,nom_completa,laboratorio,cantidad,fvencimiento,lote from d_producto where id_producto = $id_producto and id_bodega=$bodega ORDER BY cantidad ASC";
+
+                                if($tabla=$bd1->sub_tuplas($sql)){
+                                  foreach ($tabla as $fila2) {
+
+                                     $vencimiento=$fila2['fvencimiento'];
+                                     $segundos= strtotime($vencimiento) - strtotime('now');
+                                     $diferencia_dias=intval($segundos /60/60/24);
+                                     $dias=ceil($diferencia_dias);
+
+                                     if ($dias>0 && $dias<=183) {
+                                       if ($fila["id_dproducto"]==$fila2["id_dproducto"]){
+                                        $sw=' selected="selected"';
+                                      }else{
+                                        $sw="";
+                                      }
+                                    echo '<option class="text-danger" value="'.$fila2["id_dproducto"].'"'.$sw.'><strong>'.$fila2["nom_completa"].' - '.$fila2["laboratorio"].' vencimiento: '.$fila2["fvencimiento"].'  Lote:'.$fila2["lote"].' - ('.$fila2["cantidad"].')</strong></option>';
+                                     }
+
+                                     if ($dias>183 && $dias<=365) {
+                                       if ($fila["id_dproducto"]==$fila2["id_dproducto"]){
+                                        $sw=' selected="selected"';
+                                      }else{
+                                        $sw="";
+                                      }
+                                    echo '<option class="text-warning" value="'.$fila2["id_dproducto"].'"'.$sw.'><strong>'.$fila2["nom_completa"].' - '.$fila2["laboratorio"].' vencimiento: '.$fila2["fvencimiento"].'  Lote:'.$fila2["lote"].' - ('.$fila2["cantidad"].')</strong></option>';
+                                     }
+
+                                     if ($dias>365) {
+                                       if ($fila["id_dproducto"]==$fila2["id_dproducto"]){
+                                        $sw=' selected="selected"';
+                                      }else{
+                                        $sw="";
+                                      }
+                                    echo '<option class="text-success" value="'.$fila2["id_dproducto"].'"'.$sw.'><strong>'.$fila2["nom_completa"].' - '.$fila2["laboratorio"].' vencimiento: '.$fila2["fvencimiento"].'  Lote:'.$fila2["lote"].' - ('.$fila2["cantidad"].')</strong></option>';
+                                     }
+
+                                  }
+                                }
+
+                                 ?>
+                               </select>
+                               <?php
+                             }
+                            }else {
+                              echo "No hay detalle de medicamentos disponible";
+                            }
+                             ?>
+                          </section>
+                        </section>
+                        <?php
+                  echo'</td>';
+                }
+              }
+              echo"</tr >\n";
+              echo"<tr >\n";
+              if ($fila['dosis4']>0) {
+                $id=$fila["id_d_fmedhosp"];
+                $sql2="SELECT id_dosi_med FROM dosificacion_med WHERE id_d_fmedhosp=$id and freg_farmacia='$f' and nom_dosi='10pm-12pm'";
+                //echo $sql2;
+                if ($tabla2=$bd1->sub_tuplas($sql2)){
+                  foreach ($tabla2 as $fila2 ) {
+                    if (isset($fila2['id_dosi_med'])) {
+
+                    }
+                  }
+                }else {
+                  echo'<th class="text-center">'.$fila["medicamento"].' <br> '.$fila["via"].' <br> '.$fila["frecuencia"].' Horas </th>';
+                  echo'<td class="text-left">';
+                        ?>
+                        <section class="col-md-12">
+                          <section class="col-md-6">
+                            <article class="col-md-3">
+                              <label>ID:</label>
+                              <input type="text" class="form-control" required name="id_d_fmedhosp[]" value="<?php echo $fila['id_d_fmedhosp'] ?>" <?php echo $atributo1 ?>>
+                            </article>
+                            <article class="col-md-4">
+                              <label>Franja:</label>
+                              <input type="text" class="form-control" required name="nom_dosi[]" value="10pm-12pm" <?php echo $atributo1 ?>>
+                            </article>
+                            <article class="col-md-5">
+                              <label>Estado :</label>
+                              <input type="text" class="form-control" required name="estado_dosi[]" value="Dosificado" <?php echo $atributo1 ?>>
+                            </article>
+                          </section>
+                          <section class="col-md-6">
+                            <article class="col-md-6">
+                              <label>Fecha:</label>
+                              <input type="text" class="form-control" required name="freg_farmacia[]" value="<?php echo $f ?>" <?php echo $atributo1 ?>>
+                            </article>
+                            <article class="col-md-3">
+                              <label>Dispensó:</label>
+                              <input type="text" class="form-control" required name="id_user[]" value="<?php echo $_SESSION['AUT']['id_user'] ?>" <?php echo $atributo1 ?>>
+                            </article>
+                            <article class="col-md-3">
+                              <label>Cantidad:</label>
+                              <input type="text" class="form-control" required name="cant_dosi[]" value="<?php echo $fila['dosis4'] ?>" >
+                            </article>
+                          </section>
+                          <section class="col-md-12">
+                            <label for="">Seleccione detalle:</label>
+                            <option value=""></option>
+                            <?php
+                            $id=$fila['id_d_fmedhosp'];
+                            $sql_cod="SELECT cod_med FROM d_fmedhosp WHERE id_d_fmedhosp=$id";
+                            if ($tabla_cod=$bd1->sub_tuplas($sql_cod)){
+                             foreach ($tabla_cod as $fila_cod ) {
+                               ?>
+                               <select class="form-control" required name="detalle_despacho[]">
+                                 <option value=""></option>
+                                 <?php
+                                 $id_producto=$fila_cod['cod_med'];
+                                 $bodega=$_REQUEST['bod'];
+
+                                 $sql="SELECT id_dproducto,nom_completa,laboratorio,cantidad,fvencimiento,lote from d_producto where id_producto = $id_producto and id_bodega=$bodega ORDER BY cantidad ASC";
+
+                                if($tabla=$bd1->sub_tuplas($sql)){
+                                  foreach ($tabla as $fila2) {
+
+                                     $vencimiento=$fila2['fvencimiento'];
+                                     $segundos= strtotime($vencimiento) - strtotime('now');
+                                     $diferencia_dias=intval($segundos /60/60/24);
+                                     $dias=ceil($diferencia_dias);
+
+                                     if ($dias>0 && $dias<=183) {
+                                       if ($fila["id_dproducto"]==$fila2["id_dproducto"]){
+                                        $sw=' selected="selected"';
+                                      }else{
+                                        $sw="";
+                                      }
+                                    echo '<option class="text-danger" value="'.$fila2["id_dproducto"].'"'.$sw.'><strong>'.$fila2["nom_completa"].' - '.$fila2["laboratorio"].' vencimiento: '.$fila2["fvencimiento"].'  Lote:'.$fila2["lote"].' - ('.$fila2["cantidad"].')</strong></option>';
+
+                                     }
+
+                                     if ($dias>183 && $dias<=365) {
+                                       if ($fila["id_dproducto"]==$fila2["id_dproducto"]){
+                                        $sw=' selected="selected"';
+                                      }else{
+                                        $sw="";
+                                      }
+                                    echo '<option class="text-warning" value="'.$fila2["id_dproducto"].'"'.$sw.'><strong>'.$fila2["nom_completa"].' - '.$fila2["laboratorio"].' vencimiento: '.$fila2["fvencimiento"].'  Lote:'.$fila2["lote"].' - ('.$fila2["cantidad"].')</strong></option>';
+                                     }
+
+                                     if ($dias>365) {
+                                       if ($fila["id_dproducto"]==$fila2["id_dproducto"]){
+                                        $sw=' selected="selected"';
+                                      }else{
+                                        $sw="";
+                                      }
+                                    echo '<option class="text-success" value="'.$fila2["id_dproducto"].'"'.$sw.'><strong>'.$fila2["nom_completa"].' - '.$fila2["laboratorio"].' vencimiento: '.$fila2["fvencimiento"].'  Lote:'.$fila2["lote"].' - ('.$fila2["cantidad"].')</strong></option>';
+                                     }
+
+                                  }
+                                }
+
+                                 ?>
+                               </select>
+                               <?php
+                             }
+                            }else {
+                              echo "No hay detalle de medicamentos disponible";
+                            }
+                             ?>
+                          </section>
+                        </section>
+                        <?php
+                  echo'</td>';
+                }
+              }
+            echo"</tr >\n";
+        }
+      }
+    }
+}
+?>
+
+</table>

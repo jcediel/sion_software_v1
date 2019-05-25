@@ -1,0 +1,26 @@
+body{
+	font-family: 'century ghotic';
+	font-size : 12px;
+}
+
+th{
+	font-weight: normal;
+	background-color: #6D6D6D;
+	color: #fff;
+	text-align: center;
+}
+
+td{
+	text-align: center;
+}
+
+#listado_usuario{
+	display: inline-block;
+	margin-top: 10px;
+	 width: 100%;
+}
+
+
+.linea{
+	border-bottom: 5px solid #000;
+}

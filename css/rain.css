@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  background: #435261;
+}
+.fuentep{
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 2em;
+  color: #fff;
+}
+.fuenteb{
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 2.5em;
+  color: #fff;
+}
